@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RQc//8GRR0pYNASerNW95XlZKC+i6CRYomGQ3eeQO+yuywo+1VE0urqHtr8MAlmlQgUv+mHNzavj4qsrgbVtbw==",
+  "dgSpecHash": "oXypIzkWcokNX8ApmEAYwF5UbL7QVuB0RLRak11/ZjDPx266oP5FAoK5OwYsKys/bMpvq54ws0O7E9AsWDAkvA==",
   "success": true,
-  "projectFilePath": "C:\\Projects\\PCTYBenefits\\ServerApp\\ServerApp.csproj",
+  "projectFilePath": "C:\\Projects\\PCTYBenefits\\ServerApp\\PCTYBenefitsServerApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ibotn\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\ibotn\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.8\\microsoft.aspnetcore.jsonpatch.3.1.8.nupkg.sha512",

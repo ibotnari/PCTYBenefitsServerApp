@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ServerApp", "..\", "{829A3DCE-9631-4374-AE90-FF5635E58CA9}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "PCTYBenefitsServerApp", "..\", "{829A3DCE-9631-4374-AE90-FF5635E58CA9}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_55280"
-		Debug.AspNetCompiler.PhysicalPath = "..\..\ServerApp\"
+		Debug.AspNetCompiler.PhysicalPath = "..\ServerApp\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55280\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"

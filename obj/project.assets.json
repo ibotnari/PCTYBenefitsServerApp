@@ -9426,9 +9426,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projects\\PCTYBenefits\\ServerApp\\ServerApp.csproj",
-      "projectName": "ServerApp",
-      "projectPath": "C:\\Projects\\PCTYBenefits\\ServerApp\\ServerApp.csproj",
+      "projectUniqueName": "C:\\Projects\\PCTYBenefits\\ServerApp\\PCTYBenefitsServerApp.csproj",
+      "projectName": "PCTYBenefitsServerApp",
+      "projectPath": "C:\\Projects\\PCTYBenefits\\ServerApp\\PCTYBenefitsServerApp.csproj",
       "packagesPath": "C:\\Users\\ibotn\\.nuget\\packages\\",
       "outputPath": "C:\\Projects\\PCTYBenefits\\ServerApp\\obj\\",
       "projectStyle": "PackageReference",
