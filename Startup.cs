@@ -28,7 +28,7 @@ namespace ServerApp
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString =
-                Configuration["ConnectionStrings:DefaultConnection"];
+                Configuration["ConnectionStrings:PCTYConnection"];
 
             #region App Services
 
@@ -106,7 +106,8 @@ namespace ServerApp
                 Console.WriteLine("Starting SPA strategy: " + strategy);
                 if (strategy == "proxy")
                 {
-                    spa.UseProxyToSpaDevelopmentServer("http://127.0.0.1:4200");
+                    spa.UseProxyToSpaDevelopmentServer(Configuration
+                            .GetValue<string>("DevTools:SpaConnectionStrategyBaseUrl"));
                 }
                 else if (strategy == "managed")
                 {

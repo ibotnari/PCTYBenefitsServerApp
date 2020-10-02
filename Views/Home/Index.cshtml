@@ -1,8 +1,14 @@
-﻿@section scripts {
-    <script src="runtime.js"></script>
-    <script src="polyfills.js"></script>
-    <script src="styles.js"></script>
-    <script src="vendor.js"></script>
-    <script src="main.js"></script>
-}
-<app-root></app-root>
+﻿@* @section scripts { *@
+@*     <script src="runtime.js"></script> *@
+@*     <script src="polyfills.js"></script> *@
+@*     <script src="styles.js"></script> *@
+@*     <script src="vendor.js"></script> *@
+@*     <script src="main.js"></script> *@
+@* } *@
+@* <app-root></app-root> *@
+
+@using Microsoft.Extensions.Configuration
+
+@inject IConfiguration Configuration
+<iframe src="@(Configuration.GetValue<string>("DevTools:SpaConnectionStrategyBaseUrl"))">
+</iframe>

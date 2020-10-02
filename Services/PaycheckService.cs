@@ -92,7 +92,9 @@ namespace ServerApp.Services
 
         private async Task RebuildPaychecks(int year, int employeeId)
         {
-            var yearPaychecks = await Db.Paychecks.Where(p=>p.Year == year && p.EmployeeId == employeeId).ToListAsync();
+            var employee = Db.Employees.Find(employeeId);
+            if (employee == null) throw new ArgumentOutOfRangeException($"Unable to find employee by id {employeeId}");
+            var yearPaychecks = await Db.Paychecks.Where(p=>p.Year == year && p.EmployeeId == employeeId).Include(p=>p.PaycheckBenefitsCosts).ToListAsync();
             var sentPaychecks = yearPaychecks.Where(p => p.SentDate != null).ToList();
             int lastSentIndex = 0;
             if (sentPaychecks.Any())
@@ -101,7 +103,7 @@ namespace ServerApp.Services
                 // nothing we can do - last paycheck sent
                 if (lastSentIndex == Paycheck.PaychecksPerYear) return;
             }
-            var employee = Db.Employees.Find(employeeId);
+            
             
             decimal annualPay = employee.AnnualGrossPay ?? Paycheck.DefaultAnnualGrossPay;
             decimal paycheckAmount = annualPay / Paycheck.PaychecksPerYear;
@@ -138,7 +140,7 @@ namespace ServerApp.Services
 
         private void ProcessPaycheck(Paycheck paycheck)
         {
-            paycheck.NetAmount = paycheck.GrossAmount - paycheck.BenefitsCost.Value;
+            paycheck.NetAmount = paycheck.GrossAmount - paycheck.BenefitsCost.GetValueOrDefault();
         }
 
         private void CreatePaycheckBenefitCosts(Paycheck paycheck, List<EmployeeBenefit> employeeBenefits, List<DependentBenefit> dependentBenefits)
