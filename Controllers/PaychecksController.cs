@@ -34,7 +34,7 @@ namespace ServerApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Paycheck>>> GetEmployeePaychecks(int employeeId, int year)
         {
-            return await _context.Paychecks.Where(p=>p.EmployeeId == employeeId && p.Year == year).OrderBy(p=>p.Index).ToListAsync();
+            return await _paycheckService.GetEmployeePaychecks(employeeId, year).OrderBy(p=>p.Index).ToListAsync();
         }
         [HttpGet("GetEmployeePaycheckYears")]
         public async Task<ActionResult<IEnumerable<int>>> GetEmployeePaycheckYears(int employeeId)

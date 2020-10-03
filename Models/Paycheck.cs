@@ -23,6 +23,10 @@ namespace ServerApp.Models
         [Range(0, 99999999.99)]
         [Column(TypeName = "decimal(8, 2)")]
         public decimal GrossAmount { get; set; }
+        /// <summary>
+        /// Used to store rounding gross pay residual
+        /// </summary>
+        public decimal ResidualGrossAmount { get; set; }
         [Required]
         [Range(0, 99999999.99)]
         [Column(TypeName = "decimal(8, 2)")]
@@ -40,6 +44,12 @@ namespace ServerApp.Models
         [Required]
         public virtual Employee Employee { get; set; }
         public virtual ICollection<PaycheckBenefitCost> PaycheckBenefitsCosts { get; set; }
-        
+
+        public void AdjustResidualGrossAmount()
+        {
+            ResidualGrossAmount = GrossAmount;
+            GrossAmount = Math.Round(GrossAmount, 2);
+            ResidualGrossAmount -= GrossAmount;
+        }
     }
 }

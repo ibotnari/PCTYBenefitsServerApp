@@ -94,7 +94,7 @@ namespace ServerApp.Models
         public static List<Paycheck> BuildPaychecks(Employee e, int year)
         {
             decimal annual = e.AnnualGrossPay ?? Paycheck.DefaultAnnualGrossPay;
-            decimal paycheckAmount = annual / Paycheck.PaychecksPerYear;
+            decimal paycheckAmount = 1.0M * annual / Paycheck.PaychecksPerYear;
             List<Paycheck> result = new List<Paycheck>(Paycheck.PaychecksPerYear);
             var dateFrom = new DateTime(year, 1, 1);
             int daysPerCheck = (int)365 / Paycheck.PaychecksPerYear;
@@ -102,7 +102,7 @@ namespace ServerApp.Models
             for (int i = 0; i < Paycheck.PaychecksPerYear; i++)
             {
                 dateTo = dateFrom.AddDays(daysPerCheck-1);
-                result.Add(new Paycheck()
+                var paycheck = new Paycheck()
                 {
                     GrossAmount = paycheckAmount,
                     StartDate = dateFrom,
@@ -110,7 +110,9 @@ namespace ServerApp.Models
                     Index = i+1,
                     Year = year,
                     Employee = e
-                });
+                };
+                result.Add(paycheck);
+                paycheck.AdjustResidualGrossAmount();
                 dateFrom = dateFrom.AddDays(daysPerCheck);
             }
 

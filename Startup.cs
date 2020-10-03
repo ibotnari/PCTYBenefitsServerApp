@@ -9,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using ServerApp.Models;
 using ServerApp.Services;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ServerApp
 {
@@ -75,8 +74,9 @@ namespace ServerApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseCors(AllowAllCors);
-            
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -107,7 +107,7 @@ namespace ServerApp
                 if (strategy == "proxy")
                 {
                     spa.UseProxyToSpaDevelopmentServer(Configuration
-                            .GetValue<string>("DevTools:SpaConnectionStrategyBaseUrl"));
+                        .GetValue<string>("DevTools:SpaConnectionStrategyBaseUrl"));
                 }
                 else if (strategy == "managed")
                 {

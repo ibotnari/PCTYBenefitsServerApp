@@ -47,6 +47,11 @@ namespace ServerApp.Models
             {
                 ApplyDiscount(discount);
             }
+            AdjustResidualAmount();
+        }
+
+        private void AdjustResidualAmount()
+        {
             ResidualAmount = Amount;
             Amount = Math.Round(Amount, 2);
             ResidualAmount -= Amount;
