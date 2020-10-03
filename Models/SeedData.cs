@@ -84,14 +84,14 @@ namespace ServerApp.Models
                 }
             };
 
-            employee.Paychecks = BuildPaychecks(2020, employee);
+            employee.Paychecks = BuildPaychecks(employee, 2020);
             db.Employees.AddRange(
                 employee
             );
             db.SaveChanges();
         }
 
-        public static List<Paycheck> BuildPaychecks(int year, Employee e)
+        public static List<Paycheck> BuildPaychecks(Employee e, int year)
         {
             decimal annual = e.AnnualGrossPay ?? Paycheck.DefaultAnnualGrossPay;
             decimal paycheckAmount = annual / Paycheck.PaychecksPerYear;

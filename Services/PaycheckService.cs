@@ -12,8 +12,8 @@ namespace ServerApp.Services
 {
     public interface IPaycheckService
     {
-        Task ProcessPaychecks(int year, int employeeId);
-        Task RemovePaychecks(int year, int employeeId);
+        Task ProcessPaychecks(int employeeId, int year);
+        Task DeletePaychecks(int employeeId, int year);
     }
 
     public class PaycheckService: BaseDataService, IPaycheckService
@@ -25,13 +25,13 @@ namespace ServerApp.Services
             BenefitsService = benefitsService;
         }
 
-        public async Task ProcessPaychecks(int year, int employeeId)
+        public async Task ProcessPaychecks(int employeeId, int year)
         {
             if (year <= 0) throw new ArgumentException("Invalid Year");
             if (employeeId <= 0) throw new ArgumentException("Invalid EmployeeId");
             // Getting and processing only paychecks that haven't been sent
-            await RebuildPaychecks(year, employeeId);
-            var paychecksForTheYear = await GetPaychecksForTheYear(year, employeeId);
+            await RebuildPaychecks(employeeId, year);
+            var paychecksForTheYear = await GetPaychecksForTheYear(employeeId, year);
             var paychecksToProcess = paychecksForTheYear.Where(p => p.SentDate == null).OrderBy(p => p.Index).ToList();
             if (!paychecksToProcess.Any()) return;
             // paychecksToProcess.SelectMany(pc => pc.PaycheckBenefitsCosts).ToList()
@@ -60,7 +60,7 @@ namespace ServerApp.Services
             await Db.SaveChangesAsync();
         }
 
-        private async Task<List<Paycheck>> GetPaychecksForTheYear(int year, int employeeId)
+        private async Task<List<Paycheck>> GetPaychecksForTheYear(int employeeId, int year)
         {
             return await Db.Paychecks.Where(pc => pc.Year == year && pc.EmployeeId == employeeId)
                 .Include(pc=>pc.PaycheckBenefitsCosts)
@@ -69,28 +69,28 @@ namespace ServerApp.Services
                 .ToListAsync();
         }
 
-        private async Task<List<Paycheck>> GetOrCreatePaychecksForTheYear(int year, int employeeId)
+        private async Task<List<Paycheck>> GetOrCreatePaychecksForTheYear(int employeeId, int year)
         {
-            var paychecksForTheYear = await GetPaychecksForTheYear(year, employeeId);
+            var paychecksForTheYear = await GetPaychecksForTheYear(employeeId, year);
             if (!paychecksForTheYear.Any())
             {
                 var employee = Db.Employees.Find(employeeId);
                 if (employee == null) throw new ArgumentException($"Unable to find employee by id {employeeId}");
-                var paychecks = SeedData.BuildPaychecks(year, employee);
+                var paychecks = SeedData.BuildPaychecks(employee, year);
                 paychecks.ForEach(p => { p.EmployeeId = employeeId;});
                 await Db.Paychecks.AddRangeAsync(paychecks);
                 await Db.SaveChangesAsync();
             }
-            return await GetPaychecksForTheYear(year, employeeId);
+            return await GetPaychecksForTheYear(employeeId, year);
         }
 
-        public async Task RemovePaychecks(int year, int employeeId)
+        public async Task DeletePaychecks( int employeeId, int year)
         {
-            Db.Paychecks.RemoveRange(Db.Paychecks.Where(p => p.Year == year && p.EmployeeId == employeeId && p.SentDate == null));
+            Db.Paychecks.RemoveRange(Db.Paychecks.Where(p => p.Year == year && p.EmployeeId == employeeId && p.SentDate == null).Include(p=>p.PaycheckBenefitsCosts));
             await Db.SaveChangesAsync();
         }
 
-        private async Task RebuildPaychecks(int year, int employeeId)
+        private async Task RebuildPaychecks(int employeeId, int year)
         {
             var employee = Db.Employees.Find(employeeId);
             if (employee == null) throw new ArgumentOutOfRangeException($"Unable to find employee by id {employeeId}");

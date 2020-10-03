@@ -25,9 +25,9 @@ namespace ServerApp.Controllers
 
         // GET: api/Paychecks
         [HttpGet("ProcessPaychecks")]
-        public async Task<ActionResult> ProcessPaychecks(int year, int employeeId)
+        public async Task<ActionResult> ProcessPaychecks(int employeeId, int year)
         {
-            await _paycheckService.ProcessPaychecks(year, employeeId);
+            await _paycheckService.ProcessPaychecks(employeeId, year);
             return NoContent();
         }
         // GET: api/Paychecks
@@ -114,7 +114,12 @@ namespace ServerApp.Controllers
 
             return paycheck;
         }
-
+        [HttpDelete("DeletePaychecks")]
+        public async Task<ActionResult> DeletePaychecks(int employeeId, int year)
+        {
+            await _paycheckService.DeletePaychecks(employeeId, year);
+            return NoContent();
+        }
         private bool PaycheckExists(int id)
         {
             return _context.Paychecks.Any(e => e.Id == id);

@@ -10,5 +10,5 @@
 @using Microsoft.Extensions.Configuration
 
 @inject IConfiguration Configuration
-<iframe src="@(Configuration.GetValue<string>("DevTools:SpaConnectionStrategyBaseUrl"))">
+<iframe style="width: 100vw;height: 100vh;position: relative;border:0" src="@(Configuration.GetValue<string>("DevTools:SpaConnectionStrategyBaseUrl"))">
 </iframe>
