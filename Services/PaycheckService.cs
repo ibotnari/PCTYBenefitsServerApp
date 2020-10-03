@@ -147,7 +147,7 @@ namespace ServerApp.Services
 
 
             var annualPay = employee.AnnualGrossPay ?? Paycheck.DefaultAnnualGrossPay;
-            var paycheckAmount = Math.Round(annualPay / Paycheck.PaychecksPerYear, 2);
+            var paycheckAmount = annualPay / Paycheck.PaychecksPerYear;
             var dateFrom = new DateTime(year, 1, 1);
             var daysPerCheck = 365 / Paycheck.PaychecksPerYear;
 
