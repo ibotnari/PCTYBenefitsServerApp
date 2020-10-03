@@ -26,6 +26,7 @@ namespace ServerApp.Models
         /// <summary>
         /// Used to store rounding gross pay residual
         /// </summary>
+        [Column(TypeName = "decimal(32,24)")]
         public decimal ResidualGrossAmount { get; set; }
         [Required]
         [Range(0, 99999999.99)]
